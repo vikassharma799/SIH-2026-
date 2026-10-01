@@ -1,0 +1,1255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Vidya Setu – Scholarship Recommendation System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Mukta:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+/* Vidya Setu - Scholarship Recommendation System
+   Colors and fonts are CSS variables in :root; dark mode follows the device setting. */
+
+:root {
+  --bg: #faf7f2;
+  --surface: #fff;
+  --ink: #2a2118;
+  --muted: #6b5f52;
+  --forest: #1f5d3a;
+  --ochre: #c9812b;
+  --sand: #f1e8da;
+  --line: #e6dccb;
+  --on: #fff;
+  --head: "Fraunces", Georgia, serif;
+  --body: "Mukta", system-ui, -apple-system, "Segoe UI", sans-serif;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17140f;
+    --surface: #221d16;
+    --ink: #f1e9dc;
+    --muted: #b3a794;
+    --forest: #5fb487;
+    --ochre: #e4a049;
+    --sand: #2b2419;
+    --line: #3a3225;
+    --on: #10281c;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17140f;
+  --surface: #221d16;
+  --ink: #f1e9dc;
+  --muted: #b3a794;
+  --forest: #5fb487;
+  --ochre: #e4a049;
+  --sand: #2b2419;
+  --line: #3a3225;
+  --on: #10281c;
+}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 70px);
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 17px/1.6 var(--body);
+}
+h1,
+h2,
+h3 {
+  font-family: var(--head);
+  line-height: 1.2;
+  margin: 0;
+}
+h2 {
+  color: var(--forest);
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+}
+:focus-visible {
+  outline: 3px solid var(--ochre);
+  outline-offset: 2px;
+}
+/* ---------- Layout ---------- */
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+section {
+  padding: 56px 0;
+}
+.alt {
+  background: var(--sand);
+}
+.lead {
+  color: var(--muted);
+  max-width: 62ch;
+  margin: 8px 0 28px;
+}
+/* ---------- Header and navigation ---------- */
+header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 18px;
+  padding: 12px 20px;
+  flex-wrap: wrap;
+}
+.logo {
+  font: 700 1.2rem var(--head);
+  color: var(--forest);
+  text-decoration: none;
+}
+.nav ul {
+  display: flex;
+  gap: 6px 18px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+.nav a {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--muted);
+}
+.nav a:hover {
+  color: var(--forest);
+}
+/* ---------- Buttons ---------- */
+button,
+.btn {
+  font: 600 1rem var(--body);
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 10px 20px;
+  border: 2px solid var(--forest);
+  background: var(--forest);
+  color: var(--on);
+}
+button.ghost {
+  background: transparent;
+  color: var(--forest);
+}
+button.small {
+  padding: 5px 12px;
+  font-size: 0.9rem;
+}
+/* ---------- Hero ---------- */
+.hero {
+  background: var(--forest);
+  color: var(--on);
+  position: relative;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    #c9812b 0 24px,
+    #fff 24px 36px,
+    #8a3b24 36px 60px,
+    #174630 60px 72px
+  );
+}
+.hero .wrap {
+  padding-top: 60px;
+  padding-bottom: 76px;
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: center;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.1rem);
+}
+.hero p {
+  opacity: 0.92;
+  max-width: 50ch;
+}
+.stats {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.stats b {
+  display: block;
+  font: 700 1.9rem var(--head);
+}
+.stats span {
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+.panel {
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 22px;
+  border-top: 4px solid var(--ochre);
+}
+.panel h3 {
+  margin-bottom: 12px;
+  color: var(--forest);
+}
+/* ---------- Forms ---------- */
+form {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+.full {
+  grid-column: 1/-1;
+}
+label {
+  display: grid;
+  gap: 4px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+input,
+select {
+  font: 400 1rem var(--body);
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  width: 100%;
+}
+label.chk {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 400;
+}
+label.chk input {
+  width: auto;
+}
+/* ---------- Scheme cards ---------- */
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--ochre);
+  border-radius: 8px;
+  padding: 20px;
+}
+.card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+.card p {
+  margin: 4px 0 12px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.pct {
+  float: right;
+  font: 700 1.3rem var(--head);
+  color: var(--forest);
+}
+.bar {
+  height: 6px;
+  background: var(--line);
+  border-radius: 9px;
+  margin: 10px 0;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  background: var(--forest);
+  border-radius: 9px;
+}
+.tag {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--forest);
+  background: var(--sand);
+  padding: 1px 10px;
+  border-radius: 99px;
+}
+.miss {
+  color: #a4491f;
+  font-size: 0.9rem;
+}
+:root[data-theme="dark"] .miss {
+  color: #e9926a;
+}
+/* ---------- Table ---------- */
+.scroll {
+  overflow-x: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  min-width: 600px;
+}
+th,
+td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+th {
+  background: var(--forest);
+  color: var(--on);
+}
+.tools {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.tools input,
+.tools select {
+  max-width: 260px;
+}
+/* ---------- FAQ ---------- */
+details {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 10px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+details p {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+.two {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+/* ---------- Application tracker ---------- */
+.track {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+}
+.track li {
+  padding: 6px 0 6px 28px;
+  position: relative;
+  color: var(--muted);
+}
+.track li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 13px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+}
+.track li.done {
+  color: var(--ink);
+}
+.track li.done::before {
+  background: var(--forest);
+  border-color: var(--forest);
+}
+/* ---------- JAGO chat ---------- */
+.chat {
+  height: 260px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--bg);
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.msg {
+  padding: 8px 12px;
+  border-radius: 10px;
+  max-width: 85%;
+}
+.bot {
+  background: var(--sand);
+}
+.me {
+  background: var(--forest);
+  color: var(--on);
+  justify-self: end;
+}
+.row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+/* ---------- Dialogs ---------- */
+dialog {
+  border: 0;
+  border-radius: 10px;
+  padding: 24px;
+  max-width: 520px;
+  width: calc(100% - 32px);
+  background: var(--surface);
+  color: var(--ink);
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+dialog ul {
+  padding-left: 20px;
+  margin: 6px 0 12px;
+}
+dialog h4 {
+  margin: 12px 0 2px;
+  color: var(--forest);
+}
+/* ---------- Footer and responsive ---------- */
+footer {
+  background: var(--sand);
+  padding: 28px 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 560px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+</style>
+  </head>
+  <body>
+    <header>
+      <nav class="nav" aria-label="Main">
+        <a class="logo" href="#top">Vidya Setu</a>
+        <ul>
+          <li><a href="#match">Find my schemes</a></li>
+          <li><a href="#explore">Browse</a></li>
+          <li><a href="#estimate">Estimator</a></li>
+          <li><a href="#compare">Compare</a></li>
+          <li><a href="#history">History</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#assistant">JAGO</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <span
+          ><span id="who" style="margin-right: 8px"></span
+          ><button class="small ghost" id="signBtn">Sign in</button></span
+        >
+      </nav>
+    </header>
+
+    <main id="top">
+      <div class="hero">
+        <div class="wrap">
+          <div>
+            <h1>From five portals to the right scholarship.</h1>
+            <p>
+              Tell us about your studies. We compare your profile with Ministry
+              of Tribal Affairs scheme rules and show the scholarships that may
+              fit your level, income and course.
+            </p>
+            <div class="stats">
+              <div><b>5</b><span>MoTA ST schemes</span></div>
+              <div><b>30 lakh</b><span>ST students covered via DBT</span></div>
+              <div><b>2 min</b><span>to your shortlist</span></div>
+            </div>
+          </div>
+          <div class="panel" id="match">
+            <h3>Tell us about you</h3>
+            <form id="form">
+              <label class="full">Your name<input id="name" required /></label>
+
+              <label class="full"
+                >Annual family income (₹)<input
+                  id="inc"
+                  type="number"
+                  min="0"
+                  value="200000"
+                  required
+              /></label>
+              <label class="full"
+                >Current or next level of study
+                <select id="lvl">
+                  <option value="9">Class 9–10</option>
+                  <option value="11">Class 11–12</option>
+                  <option value="ug" selected>Graduate / Professional</option>
+                  <option value="pg">Postgraduate</option>
+                  <option value="phd">M.Phil / Ph.D.</option>
+                </select></label
+              >
+              <label class="chk full"
+                ><input type="checkbox" id="top" /> My institute is a notified
+                top-class institution</label
+              >
+              <label class="chk full"
+                ><input type="checkbox" id="girl" /> I am a girl student</label
+              >
+              <label class="chk full"
+                ><input type="checkbox" id="dis" /> I am a person with
+                disability (Divyang)</label
+              >
+              <label class="chk full"
+                ><input type="checkbox" id="pvtg" /> I belong to a Particularly
+                Vulnerable Tribal Group (PVTG)</label
+              >
+
+              <button class="full" type="submit">Find my schemes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <section id="results" hidden>
+        <div class="wrap">
+          <h2>Schemes for you</h2>
+          <p class="lead" id="rlead"></p>
+          <div class="grid" id="rgrid"></div>
+        </div>
+      </section>
+
+      <section class="alt" id="explore">
+        <div class="wrap">
+          <h2>Browse all schemes</h2>
+          <p class="lead">
+            Search or filter, then open a scheme for benefits, eligibility,
+            documents and steps.
+          </p>
+          <div class="tools">
+            <input
+              id="q"
+              placeholder="Search schemes"
+              aria-label="Search schemes"
+            /><select id="f" aria-label="Filter by level">
+              <option value="">All levels</option>
+              <option value="9">School</option>
+              <option value="ug">College</option>
+              <option value="phd">Research</option>
+              <option value="abr">Abroad</option>
+            </select>
+          </div>
+          <div class="scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Scheme</th>
+                  <th>For</th>
+                  <th>Income limit</th>
+                  <th>Portal</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="estimate">
+        <div class="wrap">
+          <h2>Benefit estimator</h2>
+          <p class="lead">
+            See what fixed monthly amounts add up to over your course.
+          </p>
+          <div class="panel" style="max-width: 560px">
+            <form id="eform">
+              <label class="full">Scheme<select id="es"></select></label>
+              <label
+                >Years of study<input
+                  id="ey"
+                  type="number"
+                  min="1"
+                  max="6"
+                  value="1"
+              /></label>
+              <div style="display: flex; align-items: end">
+                <button type="submit">Estimate</button>
+              </div>
+            </form>
+            <p id="eout" aria-live="polite"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="alt" id="compare">
+        <div class="wrap">
+          <h2>Compare the five schemes</h2>
+          <p class="lead">Key facts side by side.</p>
+          <div class="scroll">
+            <table style="min-width: 900px">
+              <thead>
+                <tr>
+                  <th>Scheme</th>
+                  <th>For</th>
+                  <th>Income limit</th>
+                  <th>Main benefit</th>
+                  <th>Funding</th>
+                  <th>Selection</th>
+                </tr>
+              </thead>
+              <tbody id="cmp"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="history">
+        <div class="wrap">
+          <h2>Recently visited schemes</h2>
+          <p class="lead">Schemes you open are saved here on this device.</p>
+          <div id="hist"></div>
+          <button class="small ghost" id="clr" style="margin-top: 10px">
+            Clear history
+          </button>
+        </div>
+      </section>
+
+      <section class="alt" id="services">
+        <div class="wrap">
+          <h2>Services in one place</h2>
+          <p class="lead">Track your application and check your documents.</p>
+          <div class="two">
+            <div class="panel">
+              <h3>Application tracker</h3>
+              <div id="apps">
+                <p style="color: var(--muted)">
+                  No application yet. Open a scheme and choose “Start
+                  application”.
+                </p>
+              </div>
+            </div>
+            <div class="panel">
+              <h3>My documents</h3>
+              <p style="color: var(--muted); margin-top: 0">
+                Tick what you have.
+              </p>
+              <div id="docs"></div>
+              <p id="docmiss" class="miss"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="assistant">
+        <div class="wrap" style="max-width: 720px">
+          <h2>Ask JAGO</h2>
+          <p class="lead">
+            Try: “documents”, “income limit”, “study abroad”, “fellowship” or
+            “deadline”.
+          </p>
+          <div class="chat" id="chat" aria-live="polite">
+            <div class="msg bot">
+              Namaste! I am JAGO. Ask me about a scheme, a document or how to
+              apply.
+            </div>
+          </div>
+          <form class="row" id="cform" style="display: flex">
+            <input
+              id="cin"
+              placeholder="Type your question"
+              aria-label="Your question"
+            /><button type="submit">Send</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="alt" id="faq">
+        <div class="wrap" style="max-width: 780px">
+          <h2>Common questions</h2>
+          <p class="lead">Short answers to what students ask first.</p>
+          <details>
+            <summary>Where do I raise a complaint?</summary>
+            <p>
+              Pre-Matric and Post-Matric complaints go through the communication
+              module on dbttribal.gov.in. Top Class, NFST and NOS students use
+              the grievance module on their portal or the help-desk email shown
+              in each scheme's details.
+            </p>
+          </details>
+          <details>
+            <summary>How does the system pick schemes?</summary>
+            <p>
+              It compares your level of study, income, age and a few facts about
+              your course with each scheme's rules.
+            </p>
+          </details>
+          <details>
+            <summary>Is a high match a guarantee?</summary>
+            <p>
+              No. The match score is a prototype guide. The scholarship
+              authority decides final eligibility.
+            </p>
+          </details>
+          <details>
+            <summary>Do I need to sign in?</summary>
+            <p>
+              No. Browsing and matching work without an account. Signing in only
+              saves your history on this device.
+            </p>
+          </details>
+          <details>
+            <summary>Are the scheme details final?</summary>
+            <p>
+              No. Limits and benefits change, so confirm on scholarships.gov.in
+              and tribal.nic.in before applying.
+            </p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <strong>Vidya Setu</strong> was built by team Distorted Faction for
+        Smart India Hackathon 2026 (SIH26238). Scheme details come from the
+        Ministry of Tribal Affairs scholarship page
+        (tribal.nic.in/ScholarshiP.aspx). Amounts and rules change, so verify on
+        the official portals before applying.
+      </div>
+    </footer>
+
+    <dialog id="dlg"></dialog>
+    <dialog id="auth">
+      <h3 style="color: var(--forest)">Sign in</h3>
+      <p style="color: var(--muted)">
+        Demo only. Do not enter a real password.
+      </p>
+      <form id="aform" style="grid-template-columns: 1fr">
+        <label>Name<input id="an" required /></label
+        ><label>Email<input id="ae" type="email" required /></label>
+        <div class="row">
+          <button type="submit">Sign in</button
+          ><button type="button" class="ghost" id="aclose">Cancel</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script>
+// Vidya Setu - Scholarship Recommendation System
+// Everything runs in the browser; no backend is used.
+
+const $ = (id) => document.getElementById(id);
+// ---------- Storage helper (safe localStorage) ----------
+const store = {
+  get(k, d) {
+    try {
+      const v = localStorage.getItem(k);
+      return v ? JSON.parse(v) : d;
+    } catch (e) {
+      return d;
+    }
+  },
+  set(k, v) {
+    try {
+      localStorage.setItem(k, JSON.stringify(v));
+    } catch (e) {}
+  },
+};
+// ---------- Scheme data (source: tribal.nic.in/ScholarshiP.aspx; verify before applying) ----------
+const DOCS = [
+  "Aadhaar",
+  "ST caste certificate",
+  "Income certificate",
+  "Marksheets",
+  "Bank passbook",
+  "Admission proof",
+];
+const PREF = {
+  girl: "girl students",
+  dis: "Divyang students",
+  pvtg: "PVTG students",
+};
+const S = [
+  {
+    id: "pre",
+    name: "Pre-Matric Scholarship",
+    for: "Class IX–X",
+    grp: "9",
+    lvls: ["9"],
+    max: 250000,
+    portal: "State portal / NSP",
+    fund: "Centrally Sponsored (Centre:State 75:25)",
+    select: "All eligible students",
+    pref: [],
+    ben: "Monthly support for ST students studying in Classes IX–X.",
+    benefits: [
+      "₹225 per month for day scholars",
+      "₹525 per month for hostellers",
+      "Paid for 10 months in a year",
+    ],
+    link: "https://dbttribal.gov.in/",
+    mail: "",
+    docs: [0, 1, 2, 3, 4],
+    steps: [
+      "Register on the state portal or NSP",
+      "Fill the form",
+      "School verifies",
+      "Payment by DBT",
+    ],
+  },
+  {
+    id: "post",
+    name: "Post-Matric Scholarship",
+    for: "Class X pass and above",
+    grp: "ug",
+    lvls: ["11", "ug", "pg", "phd"],
+    max: 250000,
+    portal: "State portal / NSP",
+    fund: "Centrally Sponsored (Centre:State 75:25)",
+    select: "All eligible students",
+    pref: [],
+    ben: "Fee payment and monthly maintenance for any recognized course after Class X.",
+    benefits: [
+      "Compulsory fees charged by the institution, up to the state limit",
+      "Maintenance allowance of ₹230 to ₹1,200 per month, depending on the course",
+    ],
+    link: "https://dbttribal.gov.in/",
+    mail: "",
+    docs: [0, 1, 2, 3, 4, 5],
+    steps: [
+      "Register on the state portal or NSP",
+      "Fill the form",
+      "Institute verifies",
+      "Nodal officer approves",
+      "Payment by DBT",
+    ],
+  },
+  {
+    id: "top",
+    name: "National Scholarship (Top Class)",
+    for: "Premier institutes (IITs, AIIMS, IIMs and more)",
+    grp: "ug",
+    lvls: ["ug", "pg"],
+    max: 600000,
+    portal: "NSP",
+    need: "top",
+    fund: "Central Sector (fully funded by the Centre)",
+    select:
+      "Fresh students, selected on merit; preference to girls, Divyang and PVTGs",
+    pref: ["girl", "dis", "pvtg"],
+    ben: "Full support for ST students at institutes notified by the Ministry.",
+    benefits: [
+      "Tuition and admission fees",
+      "Living expenses or stipend",
+      "Allowance for books and computer",
+      "Given for the full duration of the course",
+    ],
+    link: "https://scholarships.gov.in",
+    mail: "edu-tribal@nic.in",
+    docs: [0, 1, 2, 3, 4, 5],
+    steps: [
+      "Register on NSP",
+      "Select your notified institute",
+      "Verification",
+      "Payment by DBT",
+    ],
+  },
+  {
+    id: "nfst",
+    name: "National Fellowship (NFST)",
+    for: "M.Phil / Ph.D.",
+    grp: "phd",
+    lvls: ["phd"],
+    max: null,
+    portal: "Fellowship portal",
+    fund: "Central Sector (fully funded by the Centre)",
+    select:
+      "750 fresh students a year, merit based on Master's marks; preference to girls, Divyang and PVTGs",
+    pref: ["girl", "dis", "pvtg"],
+    ben: "Monthly fellowship for ST students doing M.Phil or Ph.D. at recognized institutions.",
+    benefits: [
+      "₹25,000 per month for M.Phil",
+      "₹28,000 per month for Ph.D.",
+      "Contingency and HRA allowances",
+      "Given for the full duration of the course",
+    ],
+    link: "https://fellowship.tribal.gov.in/",
+    mail: "fellowship-tribal@nic.in",
+    docs: [0, 1, 3, 4, 5],
+    steps: [
+      "Register on the fellowship portal",
+      "Apply with Master's marks",
+      "University verifies",
+      "Fellowship released",
+    ],
+  },
+  {
+    id: "nos",
+    name: "National Overseas Scholarship (NOS)",
+    for: "Master's, Ph.D. or Post-Doc abroad",
+    grp: "abr",
+    lvls: ["pg", "phd"],
+    max: 600000,
+    portal: "NOS portal",
+    fund: "Central Sector (fully funded by the Centre)",
+    select:
+      "20 awards a year (17 ST, 3 PVTG); interview-based merit list. You get 2 years after selection to secure admission abroad",
+    pref: ["pvtg"],
+    ben: "Support for selected ST students to study at a university outside India.",
+    benefits: [
+      "Tuition fee",
+      "Annual maintenance allowance of USD 15,400",
+      "Contingency charges of USD 1,532",
+      "Visa fee, poll tax, medical insurance and air travel",
+    ],
+    link: "https://overseas.tribal.gov.in/",
+    mail: "fellowship-tribal@nic.in",
+    docs: [0, 1, 2, 3, 4, 5],
+    steps: [
+      "Apply on the NOS portal",
+      "Interview by expert committee",
+      "Selection and award letter",
+      "Get admission abroad within 2 years",
+    ],
+  },
+];
+
+// ---------- Matching logic ----------
+const money = (n) => (n ? "₹" + n.toLocaleString("en-IN") : "No limit");
+const NEED = { top: "Not at a notified premier institute" };
+
+function score(s, p) {
+  const checks = [["Level of study", s.lvls.includes(p.lvl)]];
+  if (s.max) checks.push(["Income above " + money(s.max), p.inc <= s.max]);
+  if (s.need) checks.push([NEED[s.need], p[s.need]]);
+  const ok = checks.filter((c) => c[1]).length;
+  return {
+    pct: Math.round((ok / checks.length) * 100),
+    miss: checks.filter((c) => !c[1]).map((c) => c[0]),
+  };
+}
+
+// Groups the scheme gives preference to, limited to the ones the student ticked
+function prefNote(s, p) {
+  const hit = s.pref.filter((g) => p[g]).map((g) => PREF[g]);
+  return hit.length ? `Preference applies: ${hit.join(", ")}` : "";
+}
+
+// ---------- Find my schemes form ----------
+let profile = null,
+  user = store.get("user", null);
+
+$("form").onsubmit = (e) => {
+  e.preventDefault();
+  profile = {
+    lvl: $("lvl").value,
+    inc: +$("inc").value,
+    top: $("top").checked,
+    girl: $("girl").checked,
+    dis: $("dis").checked,
+    pvtg: $("pvtg").checked,
+  };
+  const ranked = S.map((s) => ({ s, ...score(s, profile) })).sort(
+    (a, b) => b.pct - a.pct,
+  );
+  $("results").hidden = false;
+  $("rlead").textContent =
+    `${$("name").value}, here is your ranked shortlist. Open a card for details.`;
+  $("rgrid").innerHTML = ranked
+    .map((x) => {
+      const note = prefNote(x.s, profile);
+      return `<article class="card"><span class="pct">${x.pct}%</span><h3>${x.s.name}</h3>
+      <span class="tag">${x.pct == 100 ? "Likely fit" : "Partial match"}</span>
+      <div class="bar"><i style="width:${x.pct}%"></i></div><p>${x.s.ben}</p>
+      ${x.miss.length ? `<p class="miss">Not met: ${x.miss.join(", ")}</p>` : ""}
+      ${note ? `<p><span class="tag">${note}</span></p>` : ""}
+      <button class="small" data-open="${x.s.id}">View details</button></article>`;
+    })
+    .join("");
+  $("results").scrollIntoView();
+  docsUpdate();
+};
+
+// ---------- Browse table ----------
+function rows() {
+  const q = $("q").value.toLowerCase(),
+    f = $("f").value;
+  $("tbody").innerHTML =
+    S.filter((s) => s.name.toLowerCase().includes(q) && (!f || s.grp == f))
+      .map(
+        (s) =>
+          `<tr><td><strong>${s.name}</strong></td><td>${s.for}</td><td>${money(s.max)}</td><td>${s.portal}</td><td><button class="small ghost" data-open="${s.id}">Details</button></td></tr>`,
+      )
+      .join("") ||
+    `<tr><td colspan="5">No scheme found. Clear the search.</td></tr>`;
+}
+$("q").oninput = $("f").onchange = rows;
+rows();
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-open]");
+  if (b) openS(b.dataset.open);
+  const a = e.target.closest("[data-start]");
+  if (a) startApp(a.dataset.start);
+  const n = e.target.closest("[data-next]");
+  if (n) advance(n.dataset.next);
+});
+// ---------- Scheme details dialog and history ----------
+const histKey = () => "hist:" + (user ? user.email : "guest");
+
+function openS(id) {
+  const s = S.find((x) => x.id == id);
+  store.set(
+    histKey(),
+    [id, ...store.get(histKey(), []).filter((x) => x != id)].slice(0, 5),
+  );
+  histRender();
+  const prefs = s.pref.length ? s.pref.map((g) => PREF[g]).join(", ") : "";
+  $("dlg").innerHTML =
+    `<h3 style="color:var(--forest)">${s.name}</h3><p>${s.ben}</p>
+    <h4>What you get</h4><ul>${s.benefits.map((b) => `<li>${b}</li>`).join("")}</ul>
+    <h4>Eligibility</h4><ul><li>Level: ${s.for}</li><li>Family income: ${s.max ? "up to " + money(s.max) : "no income limit mentioned"}</li>
+    ${s.need ? "<li>Admission to an institute on the Ministry's notified list</li>" : ""}
+    ${prefs ? `<li>Preference to ${prefs}</li>` : ""}</ul>
+    <h4>How students are chosen</h4><p style="margin:0">${s.select}</p>
+    <h4>Funding</h4><p style="margin:0">${s.fund}</p>
+    <h4>Documents</h4><ul>${s.docs.map((i) => `<li>${DOCS[i]}</li>`).join("")}</ul>
+    <h4>Steps</h4><ol>${s.steps.map((t) => `<li>${t}</li>`).join("")}</ol>
+    <h4>Official links</h4><p style="margin:0"><a href="${s.link}" target="_blank" rel="noopener">Official portal</a>${s.mail ? ` · Help desk: ${s.mail}` : " · Grievances: use the DBT portal communication module"}</p>
+    <div class="row"><button data-start="${id}">Start application</button><button class="ghost" onclick="dlg.close()">Close</button></div>`;
+  $("dlg").showModal();
+}
+
+function histRender() {
+  const h = store.get(histKey(), []);
+  $("hist").innerHTML = h.length
+    ? h
+        .map(
+          (id) =>
+            `<button class="small ghost" style="margin:0 8px 8px 0" data-open="${id}">${S.find((x) => x.id == id).name}</button>`,
+        )
+        .join("")
+    : '<p style="color:var(--muted)">Nothing yet. Open a scheme to see it here.</p>';
+}
+$("clr").onclick = () => {
+  store.set(histKey(), []);
+  histRender();
+};
+histRender();
+
+// ---------- Application tracker ----------
+let apps = store.get("apps", []);
+function appsRender() {
+  if (!apps.length) return;
+  $("apps").innerHTML = apps
+    .map((a, i) => {
+      const s = S.find((x) => x.id == a.id);
+      return `<div style="margin-bottom:14px"><strong>${s.name}</strong><ul class="track">${s.steps.map((t, j) => `<li class="${j <= a.step ? "done" : ""}">${t}</li>`).join("")}</ul>${a.step < s.steps.length - 1 ? `<button class="small" data-next="${i}">Mark next step done</button>` : '<span class="tag">Completed</span>'}</div>`;
+    })
+    .join("");
+}
+function startApp(id) {
+  if (!apps.find((a) => a.id == id)) {
+    apps.push({ id, step: 0 });
+    store.set("apps", apps);
+  }
+  appsRender();
+  $("dlg").close();
+  $("services").scrollIntoView();
+}
+function advance(i) {
+  apps[i].step++;
+  store.set("apps", apps);
+  appsRender();
+}
+appsRender();
+// ---------- Documents checklist ----------
+let have = store.get("have", []);
+$("docs").innerHTML = DOCS.map(
+  (d, i) =>
+    `<label class="chk"><input type="checkbox" data-d="${i}" ${have.includes(i) ? "checked" : ""}> ${d}</label>`,
+).join("");
+$("docs").onchange = (e) => {
+  const i = +e.target.dataset.d;
+  have = e.target.checked ? [...have, i] : have.filter((x) => x != i);
+  store.set("have", have);
+  docsUpdate();
+};
+function docsUpdate() {
+  if (!profile) {
+    $("docmiss").textContent = "";
+    return;
+  }
+  const top = S.map((s) => ({ s, ...score(s, profile) })).sort(
+    (a, b) => b.pct - a.pct,
+  )[0].s;
+  const m = top.docs.filter((i) => !have.includes(i));
+  $("docmiss").textContent = m.length
+    ? `For ${top.name}, still missing: ${m.map((i) => DOCS[i]).join(", ")}.`
+    : `You have all documents for ${top.name}.`;
+}
+// ---------- Benefit estimator and scheme comparison ----------
+// Fixed monthly amounts published on the Ministry page
+const RATES = [
+  { label: "Pre-Matric, day scholar", m: 225, months: 10 },
+  { label: "Pre-Matric, hosteller", m: 525, months: 10 },
+  { label: "National Fellowship, M.Phil", m: 25000, months: 12 },
+  { label: "National Fellowship, Ph.D.", m: 28000, months: 12 },
+];
+$("es").innerHTML = RATES.map(
+  (r, i) => `<option value="${i}">${r.label}</option>`,
+).join("");
+$("eform").onsubmit = (e) => {
+  e.preventDefault();
+  const r = RATES[$("es").value],
+    y = Math.max(1, +$("ey").value || 1);
+  const total = r.m * r.months * y;
+  $("eout").innerHTML =
+    `<strong>${money(r.m)}</strong> per month × ${r.months} months × ${y} year(s) = <strong>${money(total)}</strong>.
+    <br><small>Estimate only. Fellowship also includes contingency and HRA. Post-Matric maintenance is ₹230–₹1,200 per month plus fees, and Top Class and NOS amounts depend on the institute or country.</small>`;
+};
+$("cmp").innerHTML = S.map(
+  (s) =>
+    `<tr><td><strong>${s.name}</strong></td><td>${s.for}</td><td>${money(s.max)}</td><td>${s.benefits[0]}</td><td>${s.fund}</td><td>${s.select}</td></tr>`,
+).join("");
+
+// ---------- JAGO assistant (keyword based, answers from the Ministry page) ----------
+const KB = [
+  [
+    "document",
+    "Most schemes need Aadhaar, ST certificate, income certificate, marksheets and a bank passbook. Open any scheme for its full list.",
+  ],
+  [
+    "income",
+    "Pre-Matric and Post-Matric: parental income up to ₹2.5 lakh a year. Top Class and NOS: up to ₹6 lakh. The NFST page mentions no income limit.",
+  ],
+  [
+    "amount",
+    "Pre-Matric pays ₹225 (day scholar) or ₹525 (hosteller) per month for 10 months. NFST pays ₹25,000 (M.Phil) or ₹28,000 (Ph.D.) per month. Try the Benefit estimator.",
+  ],
+  [
+    "stipend",
+    "Pre-Matric pays ₹225 (day scholar) or ₹525 (hosteller) per month for 10 months. Post-Matric maintenance is ₹230–₹1,200 per month.",
+  ],
+  [
+    "abroad",
+    "NOS gives 20 awards a year (17 ST, 3 PVTG) for Master's, Ph.D. or Post-Doc abroad. Selection is by interview, and you get 2 years after selection to get admission.",
+  ],
+  [
+    "fellow",
+    "NFST is for M.Phil and Ph.D. About 750 fresh students are chosen each year on Master's marks, with preference to girls, Divyang and PVTGs.",
+  ],
+  [
+    "research",
+    "NFST is for M.Phil and Ph.D. About 750 fresh students are chosen each year on Master's marks.",
+  ],
+  [
+    "pvtg",
+    "NFST, Top Class and NOS give preference to PVTG students. NOS keeps 3 of its 20 awards for PVTGs.",
+  ],
+  ["girl", "Top Class and NFST give preference to girl students."],
+  [
+    "grievance",
+    "Pre/Post-Matric: use the communication module on dbttribal.gov.in. Top Class: tribal.nic.in/Grievance or edu-tribal@nic.in. NFST and NOS: the portal's grievance module or fellowship-tribal@nic.in.",
+  ],
+  [
+    "dbt",
+    "Money goes straight to the student's bank account through DBT. The Ministry says around 30 lakh ST students are covered this way.",
+  ],
+  [
+    "portal",
+    "Pre/Post-Matric: your state portal or NSP (dbttribal.gov.in). Top Class: scholarships.gov.in. NFST: fellowship.tribal.gov.in. NOS: overseas.tribal.gov.in.",
+  ],
+  [
+    "deadline",
+    "Dates change every year. Check the Latest News on each official portal.",
+  ],
+  [
+    "school",
+    "Pre-Matric covers Classes IX–X. From Class X pass onward, look at Post-Matric.",
+  ],
+  [
+    "apply",
+    "Pick a scheme, tap Start application, and follow the tracker. Your institute then verifies it.",
+  ],
+  [
+    "hello",
+    "Namaste! Ask me about documents, income limits, amounts, grievances or study abroad.",
+  ],
+];
+$("cform").onsubmit = (e) => {
+  e.preventDefault();
+  const t = $("cin").value.trim();
+  if (!t) return;
+  const add = (c, x) => {
+    const d = document.createElement("div");
+    d.className = "msg " + c;
+    d.textContent = x;
+    $("chat").append(d);
+    $("chat").scrollTop = 1e5;
+  };
+  add("me", t);
+  const k = KB.find((x) => t.toLowerCase().includes(x[0]));
+  add(
+    "bot",
+    k
+      ? k[1]
+      : "I did not catch that. Try “documents”, “income limit”, “amount”, “grievance” or “portal”.",
+  );
+  $("cin").value = "";
+};
+
+// ---------- Demo sign in ----------
+function who() {
+  $("who").textContent = user ? user.name : "";
+  $("signBtn").textContent = user ? "Sign out" : "Sign in";
+}
+$("signBtn").onclick = () => {
+  if (user) {
+    user = null;
+    store.set("user", null);
+    who();
+    histRender();
+  } else $("auth").showModal();
+};
+$("aclose").onclick = () => $("auth").close();
+$("aform").onsubmit = (e) => {
+  e.preventDefault();
+  user = { name: $("an").value, email: $("ae").value };
+  store.set("user", user);
+  $("auth").close();
+  who();
+  histRender();
+};
+who();
+</script>
+  </body>
+</html>
